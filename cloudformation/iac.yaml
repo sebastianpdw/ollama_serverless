@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: AWS CloudFormation for AWS Lambda with Docker Image 2023-12-13
+
+Parameters:
+  DockerImageUri:
+    Type: String
+    Description: URI of the Docker image in ECR
+  ModelName:
+    Type: String
+    Description: The name of the model to use in the Lambda function
+
+
+Resources:
+  OllamaServerless:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: OllamaServerless
+      EphemeralStorage:
+        Size: 10240
+      MemorySize: 10240
+      Timeout: 120
+      Role: !GetAtt LambdaExecutionRole.Arn
+      PackageType: Image
+      Environment:
+        Variables:
+          MODEL_NAME: !Ref ModelName
+      Code:
+        ImageUri: !Ref DockerImageUri
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: LambdaExecutionPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: '*'
