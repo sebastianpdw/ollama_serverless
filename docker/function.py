@@ -15,7 +15,6 @@ if os.system("ps aux | grep ollama | grep -v grep") == 0:
 else:
     print("Starting Ollama server...")
     output = subprocess.Popen(["ollama", "serve"])
-    print("Calling lambda test function...")
     # wait 5 seconds for the server to start
     time.sleep(5)
 

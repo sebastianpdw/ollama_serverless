@@ -13,6 +13,3 @@ sleep 10
 
 # Pull model
 ollama pull "$1"
-
-# Run the model once
-#echo "hi" | ollama run "$1"
