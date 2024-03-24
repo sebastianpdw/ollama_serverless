@@ -33,5 +33,9 @@ chmod +x ./scripts/push_ecr.sh
 
 
 ```
+### 4. Test AWS Lambda Function
+Run the code below to test your AWS Lambda Function. You might need to invoke it twice to make sure the ollama server is running. The result will be written to ./output.txt
 
-
+```bash
+aws lambda invoke --function-name OllamaServerless --payload '{"body" : {"input_text": "hello, how are you?"}}' --cli-binary-format raw-in-base64-out output.txt
+```
