@@ -36,7 +36,7 @@ if ! aws ecr describe-repositories --repository-names "$REPO_NAME" &>/dev/null; 
 fi
 
 echo "Building Docker image..."
-if ! docker build -t "$IMAGE_NAME" ./docker --build-arg MODEL_NAME="$MODEL_NAME"; then
+if ! docker build --platform linux/amd64 -t "$IMAGE_NAME" ./docker --build-arg MODEL_NAME="$MODEL_NAME"; then
   echo "Docker image failed to build."
   exit 1
 fi

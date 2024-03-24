@@ -18,7 +18,7 @@ Resources:
       EphemeralStorage:
         Size: 10240
       MemorySize: 10240
-      Timeout: 120
+      Timeout: 300
       Role: !GetAtt LambdaExecutionRole.Arn
       PackageType: Image
       Environment:
